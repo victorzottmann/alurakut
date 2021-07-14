@@ -112,9 +112,6 @@ function Home() {
               })}
             </ul>
           </ProfileRelationsBoxWrapper>
-          <Box>
-            Comunidades
-          </Box>
         </div>
       </MainGrid>
     </>
