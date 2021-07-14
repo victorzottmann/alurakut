@@ -1,3 +1,4 @@
+import React from 'react'
 import styled from 'styled-components'
 
 import MainGrid from '../src/components/MainGrid'
@@ -22,6 +23,7 @@ function ProfileSidebar(props) {
 
 export default function Home() {
   const usuarioAleatorio = 'victorzottmann'
+  const comunidades = ["Alurakut"]
   const pessoasFavoritas = [
     'juunegreiros', 
     'omariosouto', 
@@ -45,11 +47,17 @@ export default function Home() {
             </h1>
             <OrkutNostalgicIconSet />
           </Box>
+
           <Box>
             <h2 className="subTitle">
               O que você deseja fazer?
             </h2>
-            <form>
+            <form onSubmit={function handleCriaComunidade(e) {
+              e.preventDefault()
+
+              comunidades.push("Alura Stars")
+              console.log(comunidades)
+            }}>
               <div>
                 <input 
                   placeholder="Qual vai ser o nome da sua comunidade?" 
@@ -71,6 +79,21 @@ export default function Home() {
           </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea:'profileRelationsArea' }}>
+          <ProfileRelationsBoxWrapper>
+            <ul>
+              {comunidades.map((item) => {
+                return (
+                  <li>
+                    <a href={`/users/${item}`} key={item}>
+                      <img src={`https://via.placeholder.com/300`} />
+                      <span>{item}</span>
+                    </a>
+                  </li>
+                )
+              })}
+            </ul>
+          </ProfileRelationsBoxWrapper>
+
           <ProfileRelationsBoxWrapper>
             <h2 className="smallTitle">
               Pessoas da Comunidade ({pessoasFavoritas.length})
