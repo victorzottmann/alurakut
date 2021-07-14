@@ -5,7 +5,7 @@ import ProfileSidebar from '../src/components/ProfileSidebar'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
-import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
+import ProfileRelations, { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 
 function Home() {
   const [comunidades, setComunidades] = useState([{
@@ -78,9 +78,12 @@ function Home() {
         </div>
         <div className="profileRelationsArea" style={{ gridArea:'profileRelationsArea' }}>
           <ProfileRelationsBoxWrapper>
-            <h2 className="smallTitle">
-              Comunidades ({comunidades.length})
-            </h2>
+            <ProfileRelations 
+              className="smallTitle" 
+              text="Comunidades" 
+              relationType={comunidades} 
+            />
+
             <ul>
               {comunidades.map((item) => {
                 return (
@@ -96,9 +99,12 @@ function Home() {
           </ProfileRelationsBoxWrapper>
 
           <ProfileRelationsBoxWrapper>
-            <h2 className="smallTitle">
-              Pessoas da Comunidade ({pessoasFavoritas.length})
-            </h2>
+            <ProfileRelations 
+              className="smallTitle" 
+              text="Pessoas da Comunidade" 
+              relationType={pessoasFavoritas} 
+            />
+            
             <ul>
               {pessoasFavoritas.map((item) => {
                 return (

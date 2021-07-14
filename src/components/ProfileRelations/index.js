@@ -50,3 +50,16 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
     }
   }
 `;
+
+function ProfileRelations(props) {
+  return (
+    <>
+      <h2 className={props.className}>
+        {props.text} ({props.relationType.length})
+      </h2>
+    </>
+  )
+}
+
+export default ProfileRelations
+
