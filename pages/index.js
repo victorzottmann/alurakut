@@ -1,29 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 
+import ProfileSidebar from '../src/components/ProfileSidebar'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
 import { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 
-function ProfileSidebar(props) {
-  return (
-    <Box>
-      <img src={`https://github.com/${props.githubUser}.png`} style={{ borderRadius: '8px' }} />
-      <hr />
-      <p>
-        <a className="boxLink" href={`https://github.com/${props.githubUser}`}>
-          @{props.githubUser}
-        </a>
-      </p>
-      <hr />
-    </Box>
-  )
-}
+function Home() {
+  const [comunidades, setComunidades] = useState([{
+    id: 1,
+    title: 'Eu odeio acordar cedo',
+    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
+  }])
 
-export default function Home() {
-  const usuarioAleatorio = 'victorzottmann'
-  const comunidades = ["Alurakut"]
   const pessoasFavoritas = [
     'juunegreiros', 
     'omariosouto', 
@@ -32,6 +22,21 @@ export default function Home() {
     'marcobrunodev',
     'felipefialho'
   ]
+  
+  const usuarioAleatorio = 'victorzottmann'
+  
+  const handleCriaComunidade = (e) => {
+    e.preventDefault();
+    const formInputData = new FormData(e.target);
+
+    const comunidade = {
+      id: new Date().toISOString(),
+      title: formInputData.get('title'),
+      image: formInputData.get('image'),
+    }
+    
+    setComunidades([...comunidades, comunidade])
+  }
 
   return (
     <>
@@ -42,9 +47,7 @@ export default function Home() {
         </div>
         <div className="welcomeArea" style={{ gridArea: 'welcomeArea' }}>
           <Box>
-            <h1 className="title">
-              Bem-vindo(a)
-            </h1>
+            <h1 className="title">Bem-vindo(a)</h1>
             <OrkutNostalgicIconSet />
           </Box>
 
@@ -52,12 +55,7 @@ export default function Home() {
             <h2 className="subTitle">
               O que você deseja fazer?
             </h2>
-            <form onSubmit={function handleCriaComunidade(e) {
-              e.preventDefault()
-
-              comunidades.push("Alura Stars")
-              console.log(comunidades)
-            }}>
+            <form onSubmit={handleCriaComunidade}>
               <div>
                 <input 
                   placeholder="Qual vai ser o nome da sua comunidade?" 
@@ -80,13 +78,16 @@ export default function Home() {
         </div>
         <div className="profileRelationsArea" style={{ gridArea:'profileRelationsArea' }}>
           <ProfileRelationsBoxWrapper>
+            <h2 className="smallTitle">
+              Comunidades ({comunidades.length})
+            </h2>
             <ul>
               {comunidades.map((item) => {
                 return (
-                  <li>
-                    <a href={`/users/${item}`} key={item}>
-                      <img src={`https://via.placeholder.com/300`} />
-                      <span>{item}</span>
+                  <li key={item.id}>
+                    <a href={`/users/${item.title}`} key={item.title}>
+                      <img src={item.image} />
+                      <span>{item.title}</span>
                     </a>
                   </li>
                 )
@@ -101,8 +102,8 @@ export default function Home() {
             <ul>
               {pessoasFavoritas.map((item) => {
                 return (
-                  <li>
-                    <a href={`/users/${item}`} key={item}>
+                  <li key={item}>
+                    <a href={`/users/${item}`}>
                       <img src={`https://github.com/${item}.png`} />
                       <span>{item}</span>
                     </a>
@@ -119,3 +120,5 @@ export default function Home() {
     </>
   ) 
 }
+
+export default Home
