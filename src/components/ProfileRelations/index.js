@@ -53,11 +53,34 @@ export const ProfileRelationsBoxWrapper = styled(Box)`
 
 function ProfileRelations(props) {
   return (
-    <>
-      <h2 className={props.className}>
-        {props.text} ({props.relationType.length})
+    <ProfileRelationsBoxWrapper>
+      <h2 className="smallTitle">
+        {props.title} ({props.items.length})
       </h2>
-    </>
+      <ul>
+        {props.items.map((item) => {
+          if (props.title === 'Comunidades') { 
+            return (
+              <li key={item.id}>
+                <a href={`/users/${item.title}`}>
+                  <img src={item.image} />
+                  <span>{item.title}</span>
+                </a>
+              </li>
+            )
+          } else if (props.title === 'Pessoas da Comunidade') {
+            return (
+              <li key={item}>
+                <a href={`/users/${item}`}>
+                  <img src={`https://github.com/${item}.png`} />
+                  <span>{item}</span>
+                </a>
+              </li>
+            )
+          }
+        })}
+      </ul>
+    </ProfileRelationsBoxWrapper>
   )
 }
 

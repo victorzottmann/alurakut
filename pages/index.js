@@ -22,6 +22,10 @@ function Home() {
     'marcobrunodev',
     'felipefialho'
   ]
+
+  const seguidores = fetch('https://api.github.com/users/victorzottmann/followers')
+    .then(res => res.json())
+    .then(data => console.log(data))
   
   const usuarioAleatorio = 'victorzottmann'
   
@@ -77,47 +81,8 @@ function Home() {
           </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea:'profileRelationsArea' }}>
-          <ProfileRelationsBoxWrapper>
-            <ProfileRelations 
-              className="smallTitle" 
-              text="Comunidades" 
-              relationType={comunidades} 
-            />
-
-            <ul>
-              {comunidades.map((item) => {
-                return (
-                  <li key={item.id}>
-                    <a href={`/users/${item.title}`} key={item.title}>
-                      <img src={item.image} />
-                      <span>{item.title}</span>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </ProfileRelationsBoxWrapper>
-
-          <ProfileRelationsBoxWrapper>
-            <ProfileRelations 
-              className="smallTitle" 
-              text="Pessoas da Comunidade" 
-              relationType={pessoasFavoritas} 
-            />
-            
-            <ul>
-              {pessoasFavoritas.map((item) => {
-                return (
-                  <li key={item}>
-                    <a href={`/users/${item}`}>
-                      <img src={`https://github.com/${item}.png`} />
-                      <span>{item}</span>
-                    </a>
-                  </li>
-                )
-              })}
-            </ul>
-          </ProfileRelationsBoxWrapper>
+          <ProfileRelations title="Comunidades" items={comunidades} />
+          <ProfileRelations title="Pessoas da Comunidade" items={pessoasFavoritas} />
         </div>
       </MainGrid>
     </>
