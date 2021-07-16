@@ -59,27 +59,24 @@ function ProfileRelations(props) {
       </h2>
       <ul>
         {props.items.map((item) => {
-          switch (props.title) {
-            case 'Comunidades':
-              return (
-                <li key={item.id}>
-                  <a href={`/users/${item.title}`}>
-                    <img src={item.image} />
-                    <span>{item.title}</span>
-                  </a>
-                </li>
-              )
-            case 'Pessoas da Comunidade':
-              return (
-                <li key={item}>
-                  <a href={`/users/${item}`}>
-                    <img src={`https://github.com/${item}.png`} />
-                    <span>{item}</span>
-                  </a>
-                </li>
-              )
-            default:
-              return 'Invalid title'
+          if (props.title === 'Comunidades' || props.title === 'Seguidores') { 
+            return (
+              <li key={item.id}>
+                <a href={`/users/${item.title}`}>
+                  <img src={item.image} />
+                  <span>{item.title}</span>
+                </a>
+              </li>
+            )
+          } else if (props.title === 'Pessoas da Comunidade') {
+            return (
+              <li key={item}>
+                <a href={`/users/${item}`}>
+                  <img src={`https://github.com/${item}.png`} />
+                  <span>{item}</span>
+                </a>
+              </li>
+            )
           }
         })}
       </ul>

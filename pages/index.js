@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 
 import ProfileSidebar from '../src/components/ProfileSidebar'
@@ -23,9 +23,13 @@ function Home() {
     'felipefialho'
   ]
 
-  const seguidores = fetch('https://api.github.com/users/victorzottmann/followers')
-    .then(res => res.json())
-    .then(data => console.log(data))
+  const [seguidores, setSeguidores] = useState([])
+  
+  useEffect(() => {
+    fetch('https://api.github.com/users/victorzottmann/followers')
+      .then(res => res.json())
+      .then(data => setSeguidores(data))
+  }, [])
   
   const usuarioAleatorio = 'victorzottmann'
   
@@ -81,6 +85,7 @@ function Home() {
           </Box>
         </div>
         <div className="profileRelationsArea" style={{ gridArea:'profileRelationsArea' }}>
+          <ProfileRelations title="Seguidores" items={seguidores} />
           <ProfileRelations title="Comunidades" items={comunidades} />
           <ProfileRelations title="Pessoas da Comunidade" items={pessoasFavoritas} />
         </div>
