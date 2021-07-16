@@ -1,18 +1,47 @@
 import React, { useState, useEffect } from 'react'
-import styled from 'styled-components'
 
 import ProfileSidebar from '../src/components/ProfileSidebar'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
+import ProfileRelations from '../src/components/ProfileRelations'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
-import ProfileRelations, { ProfileRelationsBoxWrapper } from '../src/components/ProfileRelations'
 
 function Home() {
-  const [comunidades, setComunidades] = useState([{
-    id: 1,
-    title: 'Eu odeio acordar cedo',
-    image: 'https://alurakut.vercel.app/capa-comunidade-01.jpg'
-  }])
+  const [comunidades, setComunidades] = useState([])
+
+  const [seguidores, setSeguidores] = useState([])
+  
+  useEffect(() => {
+    // GET request
+    fetch('https://api.github.com/users/victorzottmann/followers')
+      .then(res => res.json())
+      .then(data => setSeguidores(data))
+
+    // GraphQL API
+    fetch('https://graphql.datocms.com/', {
+      method: 'POST',
+      headers: {
+        'Authorization': 'cb94c76f7bea2e4fa1cb58ab83d405',
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({'query': `query {
+          allCommunities {
+            id
+            title
+            imageUrl
+            creatorSlug
+          }
+        }`
+      })
+    })
+    .then(res => res.json())
+    .then(query => {
+      const comunidadesDoDato = query.data.allCommunities
+      console.log(comunidades)
+      setComunidades(comunidadesDoDato)
+    })
+  }, [])
 
   const pessoasFavoritas = [
     'juunegreiros', 
@@ -23,14 +52,6 @@ function Home() {
     'felipefialho'
   ]
 
-  const [seguidores, setSeguidores] = useState([])
-  
-  useEffect(() => {
-    fetch('https://api.github.com/users/victorzottmann/followers')
-      .then(res => res.json())
-      .then(data => setSeguidores(data))
-  }, [])
-  
   const usuarioAleatorio = 'victorzottmann'
   
   const handleCriaComunidade = (e) => {
@@ -38,12 +59,24 @@ function Home() {
     const formInputData = new FormData(e.target);
 
     const comunidade = {
-      id: new Date().toISOString(),
       title: formInputData.get('title'),
-      image: formInputData.get('image'),
+      imageUrl: formInputData.get('image'),
+      creatorSlug: usuarioAleatorio,
     }
     
-    setComunidades([...comunidades, comunidade])
+    fetch('/api/comunidades', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(comunidade)
+    })
+    .then(async (res) => {
+      const dados = await res.json()
+
+      console.log(dados.registroCriado)
+      setComunidades([...comunidades, comunidade])
+    })
   }
 
   return (

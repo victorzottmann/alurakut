@@ -62,8 +62,8 @@ function ProfileRelations(props) {
           if (props.title === 'Comunidades' || props.title === 'Seguidores') { 
             return (
               <li key={item.id}>
-                <a href={`/users/${item.title}`}>
-                  <img src={item.image} />
+                <a href={`/users/${item.id}`}>
+                  <img src={item.imageUrl} />
                   <span>{item.title}</span>
                 </a>
               </li>
@@ -85,4 +85,3 @@ function ProfileRelations(props) {
 }
 
 export default ProfileRelations
-
