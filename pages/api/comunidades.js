@@ -9,9 +9,6 @@ export default async function recebedorDeRequests(req, res) {
     const registroCriado = await client.items.create({
       itemType: '972886', // ID do Model criado pelo Dato
       ...req.body,
-      // title: 'Teste',
-      // imageUrl: 'https://github.com/victorzottmann.png',
-      // creatorSlug: 'victorzottmann'
     })
   
     res.json({

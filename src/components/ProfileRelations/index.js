@@ -59,7 +59,7 @@ function ProfileRelations(props) {
       </h2>
       <ul>
         {props.items.map((item) => {
-          if (props.title === 'Comunidades' || props.title === 'Seguidores') { 
+          if (props.title === 'Seguidores' || props.title === 'Comunidades') { 
             return (
               <li key={item.id}>
                 <a href={`/users/${item.id}`}>
