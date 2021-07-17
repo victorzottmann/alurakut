@@ -1,24 +1,24 @@
-import { AlurakutProfileSidebarMenuDefault } from "../../lib/AlurakutCommons";
+import { AlurakutProfileSidebarMenuDefault } from '../../lib/AlurakutCommons'
 
-import Box from "../Box";
+import Box from '../Box'
 
-function ProfileSidebar({ githubUser }) {
+function ProfileSidebar({ user }) {
   return (
     <Box as="aside">
       <img
-        src={`https://github.com/${githubUser}.png`}
-        style={{ borderRadius: "8px" }}
+        src={`https://github.com/${user}.png`}
+        style={{ borderRadius: '8px' }}
       />
       <hr />
       <p>
-        <a className="boxLink" href={`https://github.com/${githubUser}`}>
-          @{githubUser}
+        <a className="boxLink" href={`https://github.com/${user}`}>
+          @{user}
         </a>
       </p>
       <hr />
       <AlurakutProfileSidebarMenuDefault />
     </Box>
-  );
+  )
 }
 
-export default ProfileSidebar;
+export default ProfileSidebar

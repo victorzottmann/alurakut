@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import nookies from 'nookies'
+import jwt from 'jsonwebtoken'
 import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
 
 import ProfileSidebar from '../src/components/ProfileSidebar'
@@ -6,11 +8,41 @@ import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import ProfileRelations from '../src/components/ProfileRelations'
 
-function Home() {
+export async function getServerSideProps(ctx) {
+  const cookies = nookies.get(ctx)
+  const token = cookies.USER_TOKEN
+
+  const { isAuthenticated } = await fetch(
+    'https://alurakut.vercel.app/api/auth',
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  ).then((res) => res.json())
+
+  if (!isAuthenticated) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    }
+  }
+
+  const { githubUser } = jwt.decode(token)
+  return {
+    props: {
+      githubUser, // will be passed to the Home component as props
+    },
+  }
+}
+
+function Home(props) {
   const [communities, setCommunities] = useState([])
   const [followers, setFollowers] = useState([])
 
-  const githubUser = 'victorzottmann'
+  const githubUser = props.githubUser
 
   useEffect(() => {
     // GET request
@@ -62,9 +94,9 @@ function Home() {
       },
       body: JSON.stringify(community),
     }).then(async (res) => {
-      const dados = await res.json()
+      const data = await res.json()
 
-      console.log('dados:', dados.registroCriado)
+      console.log('data:', data.registroCriado)
       setCommunities([...communities, community])
     })
   }
@@ -75,7 +107,7 @@ function Home() {
       <MainGrid>
         {/* First column */}
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
-          <ProfileSidebar githubUser={githubUser} />
+          <ProfileSidebar user={githubUser} />
         </div>
 
         {/* Second column */}
