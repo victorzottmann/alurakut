@@ -1,23 +1,23 @@
-import React from "react";
-import styled, { css } from "styled-components";
-import NextLink from "next/link";
+import React from 'react'
+import styled, { css } from 'styled-components'
+import NextLink from 'next/link'
 
-const BASE_URL = "http://alurakut.vercel.app/";
-const v = "1";
+const BASE_URL = 'http://alurakut.vercel.app/'
+const v = '1'
 
 function Link({ href, children, ...props }) {
   return (
     <NextLink href={href} passHref>
       <a {...props}>{children}</a>
     </NextLink>
-  );
+  )
 }
 
 // ================================================================================================================
 // Menu
 // ================================================================================================================
 export function AlurakutMenu({ githubUser }) {
-  const [isMenuOpen, setMenuState] = React.useState(false);
+  const [isMenuOpen, setMenuState] = React.useState(false)
   return (
     <AlurakutMenu.Wrapper isMenuOpen={isMenuOpen}>
       <div className="container">
@@ -25,9 +25,9 @@ export function AlurakutMenu({ githubUser }) {
 
         <nav style={{ flex: 1 }}>
           {[
-            { name: "Inicio", slug: "/" },
-            { name: "Amigos", slug: "/amigos" },
-            { name: "Comunidades", slug: "/comunidades" },
+            { name: 'Home', slug: '/' },
+            { name: 'Friends', slug: '/friends' },
+            { name: 'Communities', slug: '/communities' },
           ].map((menuItem) => (
             <Link
               key={`key__${menuItem.name.toLocaleLowerCase()}`}
@@ -39,9 +39,9 @@ export function AlurakutMenu({ githubUser }) {
         </nav>
 
         <nav>
-          <a href={`/logout`}>Sair</a>
+          <a href={`/logout`}>Log out</a>
           <div>
-            <input placeholder="Pesquisar no Orkut" />
+            <input placeholder="Search on Orkut" />
           </div>
         </nav>
 
@@ -54,7 +54,7 @@ export function AlurakutMenu({ githubUser }) {
       </div>
       <AlurakutMenuProfileSidebar githubUser={githubUser} />
     </AlurakutMenu.Wrapper>
-  );
+  )
 }
 
 AlurakutMenu.Wrapper = styled.header`
@@ -71,10 +71,10 @@ AlurakutMenu.Wrapper = styled.header`
     right: 0;
     top: 48px;
     transition: 0.3s;
-    pointer-events: ${({ isMenuOpen }) => (isMenuOpen ? "all" : "none")};
-    opacity: ${({ isMenuOpen }) => (isMenuOpen ? "1" : "0")};
+    pointer-events: ${({ isMenuOpen }) => (isMenuOpen ? 'all' : 'none')};
+    opacity: ${({ isMenuOpen }) => (isMenuOpen ? '1' : '0')};
     transform: ${({ isMenuOpen }) =>
-      isMenuOpen ? "translateY(0)" : "translateY(calc(-100% - 48px))"};
+      isMenuOpen ? 'translateY(0)' : 'translateY(calc(-100% - 48px))'};
     @media (min-width: 860px) {
       display: none;
     }
@@ -136,7 +136,7 @@ AlurakutMenu.Wrapper = styled.header`
         position: relative;
         text-decoration: none;
         &:after {
-          content: " ";
+          content: ' ';
           background-color: #5292c1;
           display: block;
           position: absolute;
@@ -165,13 +165,13 @@ AlurakutMenu.Wrapper = styled.header`
       }
     }
   }
-`;
+`
 AlurakutMenu.Logo = styled.img`
   background-color: #ffffff;
   padding: 9px 14px;
   border-radius: 1000px;
   height: 34px;
-`;
+`
 
 export function AlurakutMenuProfileSidebar({ githubUser }) {
   return (
@@ -179,7 +179,7 @@ export function AlurakutMenuProfileSidebar({ githubUser }) {
       <div>
         <img
           src={`https://github.com/${githubUser}.png`}
-          style={{ borderRadius: "8px" }}
+          style={{ borderRadius: '8px' }}
         />
         <hr />
         <p>
@@ -192,7 +192,7 @@ export function AlurakutMenuProfileSidebar({ githubUser }) {
         <AlurakutProfileSidebarMenuDefault />
       </div>
     </div>
-  );
+  )
 }
 
 // ================================================================================================================
@@ -231,7 +231,7 @@ export function AlurakutProfileSidebarMenuDefault() {
         </a>
       </nav>
     </AlurakutProfileSidebarMenuDefault.Wrapper>
-  );
+  )
 }
 AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
   a {
@@ -248,7 +248,7 @@ AlurakutProfileSidebarMenuDefault.Wrapper = styled.div`
       margin-right: 5px;
     }
   }
-`;
+`
 
 // ================================================================================================================
 // OrkutNostalgicIconSet
@@ -257,22 +257,22 @@ export function OrkutNostalgicIconSet(props) {
   return (
     <OrkutNostalgicIconSet.List>
       {[
-        { name: "Scraps", slug: "recados", icon: "book" },
-        { name: "Photos", slug: "photos", icon: "camera" },
-        { name: "Videos", slug: "videos", icon: "video-camera" },
-        { name: "Fans", slug: "fans", icon: "star" },
-        { name: "Messages", slug: "messages", icon: "email" },
+        { name: 'Scraps', slug: 'recados', icon: 'book' },
+        { name: 'Photos', slug: 'photos', icon: 'camera' },
+        { name: 'Videos', slug: 'videos', icon: 'video-camera' },
+        { name: 'Fans', slug: 'fans', icon: 'star' },
+        { name: 'Messages', slug: 'messages', icon: 'email' },
       ].map(({ name, slug, icon }) => (
         <li key={`orkut__icon_set__${slug}`}>
           <span
-            style={{ gridArea: "title" }}
+            style={{ gridArea: 'title' }}
             className="OrkutNostalgicIconSet__title"
           >
             {name}
           </span>
           <span
             className="OrkutNostalgicIconSet__number"
-            style={{ gridArea: "number" }}
+            style={{ gridArea: 'number' }}
           >
             <img
               key={`orkut__icon_set__${slug}_img`}
@@ -284,38 +284,38 @@ export function OrkutNostalgicIconSet(props) {
         </li>
       ))}
       {[
-        { name: "Trustworthy", slug: "Trustworthy", icon: "smile" },
-        { name: "Cool", slug: "cool", icon: "cool" },
-        { name: "Sexy", slug: "sexy", icon: "heart" },
+        { name: 'Trustworthy', slug: 'Trustworthy', icon: 'smile' },
+        { name: 'Cool', slug: 'cool', icon: 'cool' },
+        { name: 'Sexy', slug: 'sexy', icon: 'heart' },
       ].map(({ name, slug, icon }) => {
-        const total = props[slug] ? props[slug] : 2;
+        const total = props[slug] ? props[slug] : 2
         return (
           <li key={`orkut__icon_set__${slug}`}>
             <span className="OrkutNostalgicIconSet__title">{name}</span>
             <span
               className="OrkutNostalgicIconSet__iconComplex"
               className="OrkutNostalgicIconSet__number"
-              style={{ gridArea: "number" }}
+              style={{ gridArea: 'number' }}
             >
               {[0, 1, 2].map((_, index) => {
-                const isHeartActive = index <= total - 1;
+                const isHeartActive = index <= total - 1
                 return (
                   <img
                     key={`orkut__icon_set__${slug}_img_${index}`}
                     src={`https://alurakut.vercel.app/icons/${icon}.svg`}
                     style={{
-                      marginRight: "2px",
-                      opacity: isHeartActive ? 1 : "0.5",
+                      marginRight: '2px',
+                      opacity: isHeartActive ? 1 : '0.5',
                     }}
                   />
-                );
+                )
               })}
             </span>
           </li>
-        );
+        )
       })}
     </OrkutNostalgicIconSet.List>
-  );
+  )
 }
 OrkutNostalgicIconSet.List = styled.ul`
   margin-top: 32px;
@@ -328,8 +328,8 @@ OrkutNostalgicIconSet.List = styled.ul`
     color: #5a5a5a;
     display: grid;
     grid-template-areas:
-      "title title"
-      "number number";
+      'title title'
+      'number number';
 
     &:not(:last-child) {
       margin-right: 5px;
@@ -348,7 +348,7 @@ OrkutNostalgicIconSet.List = styled.ul`
       }
     }
   }
-`;
+`
 
 // ================================================================================================================
 // Login Page
@@ -378,15 +378,15 @@ const AlurakutLoginScreen = css`
     --gutter: 16px;
     grid-gap: var(--gap);
     grid-template-areas:
-      "logoArea"
-      "formArea"
-      "footerArea";
+      'logoArea'
+      'formArea'
+      'footerArea';
     @media (min-width: 860px) {
       grid-template-columns: 2fr 1fr;
       grid-template-areas:
-        "logoArea formArea"
-        "logoArea formArea"
-        "footerArea footerArea";
+        'logoArea formArea'
+        'logoArea formArea'
+        'footerArea footerArea';
     }
     .logoArea {
       grid-area: logoArea;
@@ -487,7 +487,7 @@ const AlurakutLoginScreen = css`
       }
     }
   }
-`;
+`
 
 // ================================================================================================================
 // Reset Styles
@@ -534,4 +534,4 @@ export const AlurakutStyles = css`
   }
 
   ${AlurakutLoginScreen}
-`;
+`
