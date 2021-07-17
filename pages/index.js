@@ -6,7 +6,8 @@ import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
 import ProfileSidebar from '../src/components/ProfileSidebar'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
-import ProfileRelations from '../src/components/ProfileRelations'
+import FriendsList from '../src/components/FriendsList'
+import { ProfileRelations } from '../src/components/ProfileRelations'
 
 export async function getServerSideProps(ctx) {
   const cookies = nookies.get(ctx)
@@ -144,7 +145,7 @@ function Home(props) {
           className="profileRelationsArea"
           style={{ gridArea: 'profileRelationsArea' }}
         >
-          <ProfileRelations title="Followers" items={followers} />
+          <FriendsList title="Followers" items={followers} />
           <ProfileRelations title="Communities" items={communities} />
         </div>
       </MainGrid>
