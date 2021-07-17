@@ -59,25 +59,14 @@ function ProfileRelations(props) {
       </h2>
       <ul>
         {props.items.map((item) => {
-          if (props.title === 'Seguidores' || props.title === 'Comunidades') { 
-            return (
-              <li key={item.id}>
-                <a href={`/users/${item.id}`}>
-                  <img src={item.imageUrl} />
-                  <span>{item.title}</span>
-                </a>
-              </li>
-            )
-          } else if (props.title === 'Pessoas da Comunidade') {
-            return (
-              <li key={item}>
-                <a href={`/users/${item}`}>
-                  <img src={`https://github.com/${item}.png`} />
-                  <span>{item}</span>
-                </a>
-              </li>
-            )
-          }
+          return (
+            <li key={item.id}>
+              <a href={`/users/${item.id}`}>
+                <img src={item.imageUrl} />
+                <span>{item.title}</span>
+              </a>
+            </li>
+          )
         })}
       </ul>
     </ProfileRelationsBoxWrapper>

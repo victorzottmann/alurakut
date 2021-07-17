@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from 'react'
+import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
 
 import ProfileSidebar from '../src/components/ProfileSidebar'
 import MainGrid from '../src/components/MainGrid'
 import Box from '../src/components/Box'
 import ProfileRelations from '../src/components/ProfileRelations'
-import { AlurakutMenu, OrkutNostalgicIconSet } from '../src/lib/AlurakutCommons'
 
 function Home() {
-  const [comunidades, setComunidades] = useState([])
-
-  const [seguidores, setSeguidores] = useState([])
+  const [communities, setCommunities] = useState([])
+  const [followers, setFollowers] = useState([])
   
+  const githubUser = 'victorzottmann'
+
   useEffect(() => {
     // GET request
     fetch('https://api.github.com/users/victorzottmann/followers')
       .then(res => res.json())
-      .then(data => setSeguidores(data))
+      .then(data => setFollowers(data))
 
     // GraphQL API
     fetch('https://graphql.datocms.com/', {
@@ -36,46 +37,35 @@ function Home() {
       })
     })
     .then(res => res.json())
-    .then(query => {
-      const comunidadesDoDato = query.data.allCommunities
-      console.log(comunidades)
-      setComunidades(comunidadesDoDato)
+    .then(jsonResponse => {
+      const communitiesFromDatoCms = jsonResponse.data.allCommunities
+      console.log(communities)
+      setCommunities(communitiesFromDatoCms)
     })
   }, [])
-
-  const pessoasFavoritas = [
-    'juunegreiros', 
-    'omariosouto', 
-    'peas', 
-    'rafaballerini', 
-    'marcobrunodev',
-    'felipefialho'
-  ]
-
-  const usuarioAleatorio = 'victorzottmann'
   
-  const handleCriaComunidade = (e) => {
+  const handleCreateCommunity = (e) => {
     e.preventDefault();
     const formInputData = new FormData(e.target);
 
-    const comunidade = {
+    const community = {
       title: formInputData.get('title'),
       imageUrl: formInputData.get('image'),
-      creatorSlug: usuarioAleatorio,
+      creatorSlug: githubUser,
     }
     
-    fetch('/api/comunidades', {
+    fetch('/api/communities', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(comunidade)
+      body: JSON.stringify(community)
     })
     .then(async (res) => {
       const dados = await res.json()
 
-      console.log(dados.registroCriado)
-      setComunidades([...comunidades, comunidade])
+      console.log('dados:', dados.registroCriado)
+      setCommunities([...communities, community])
     })
   }
 
@@ -83,44 +73,48 @@ function Home() {
     <>
       <AlurakutMenu />
       <MainGrid>
+        {/* First column */}
         <div className="profileArea" style={{ gridArea: 'profileArea' }}>
-          <ProfileSidebar githubUser={usuarioAleatorio} />
+          <ProfileSidebar githubUser={githubUser} />
         </div>
+
+        {/* Second column */}
         <div className="welcomeArea" style={{ gridArea: 'welcomeArea' }}>
           <Box>
-            <h1 className="title">Bem-vindo(a)</h1>
+            <h1 className="title">Welcome</h1>
             <OrkutNostalgicIconSet />
           </Box>
 
           <Box>
             <h2 className="subTitle">
-              O que você deseja fazer?
+              What would you like to do?
             </h2>
-            <form onSubmit={handleCriaComunidade}>
+            <form onSubmit={handleCreateCommunity}>
               <div>
                 <input 
-                  placeholder="Qual vai ser o nome da sua comunidade?" 
+                  placeholder="What will be the name of your community?" 
                   name="title" 
-                  aria-label="Qual vai ser o nome da sua comunidade?" 
+                  aria-label="What will be the name of your community?" 
                 />
               </div>
               <div>
                 <input 
-                  placeholder="Coloque uma URL para colocarmos de capa." 
+                  placeholder="Provide a URL to link to the image." 
                   name="image" 
-                  aria-label="Coloque uma URL para colocarmos de capa." 
+                  aria-label="Provide a URL to link to the image." 
                 />
               </div>
               <button>
-                Criar comunidade
+                Create community
               </button>
             </form>
           </Box>
         </div>
+
+        {/* Third column */}
         <div className="profileRelationsArea" style={{ gridArea:'profileRelationsArea' }}>
-          <ProfileRelations title="Seguidores" items={seguidores} />
-          <ProfileRelations title="Comunidades" items={comunidades} />
-          <ProfileRelations title="Pessoas da Comunidade" items={pessoasFavoritas} />
+          <ProfileRelations title="Followers" items={followers} />
+          <ProfileRelations title="Communities" items={communities} />
         </div>
       </MainGrid>
     </>

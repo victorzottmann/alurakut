@@ -1,3 +1,5 @@
+import { AlurakutProfileSidebarMenuDefault } from '../../lib/AlurakutCommons';
+
 import Box from '../Box';
 
 function ProfileSidebar(props) {
@@ -11,6 +13,7 @@ function ProfileSidebar(props) {
         </a>
       </p>
       <hr />
+      <AlurakutProfileSidebarMenuDefault />
     </Box>
   )
 }
